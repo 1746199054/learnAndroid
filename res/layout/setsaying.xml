@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="5sp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layout_"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/setsay_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="清空" />
+
+        <Button
+            android:id="@+id/setsay_bu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="发送到电脑" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/setsaying"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/layout_"
+        android:layout_marginBottom="5sp"
+        android:background="@drawable/textfield_default"
+        android:gravity="top"
+        android:hint="写点什么吧"
+        android:inputType="textMultiLine"
+        android:maxLines="16"
+        android:minLines="16"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:id="@+id/send_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textSize="20sp" />
+
+</RelativeLayout>

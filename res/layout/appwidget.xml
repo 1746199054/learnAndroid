@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/appwidget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="生活的悲欢离合永远在地平线以外，而眺望是一种青春的姿态" 
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/appbutton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="5sp"
+        android:layout_height="5sp"
+        android:text="Button" 
+        android:visibility="invisible"
+        />
+
+</LinearLayout>

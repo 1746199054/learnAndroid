@@ -18,11 +18,24 @@
         android:hint="Password"
         android:inputType="textPassword" />
 
+    <CheckBox
+        android:id="@+id/remember_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:text="  Remember Password" />
+
     <Button
         android:id="@+id/request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Request" />
+    
+    <Button
+        android:id="@+id/class_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看课表" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"

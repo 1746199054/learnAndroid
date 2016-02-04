@@ -1,36 +1,46 @@
 package com.example.schedule;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import com.example.tools.Encode;
-import com.example.tools.Rege;
+import com.example.test.MainReceiver;
+import com.example.tools.HttpRequest;
+import com.example.tools.MyDB;
+import com.example.tools.Response;
+import com.example.tools.timetable.Timetable;
+import com.example.tools.timetable.TimetableMaker;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Schedule extends Activity implements OnClickListener {
-
-	public static final int SHOW_RESPONSE = 0;
-
+	private CheckBox checkbox;
 	private EditText user, pass;
-	private Button requset;
+	private Button requset, class_table;
 	private TextView text;
+
+	private SharedPreferences.Editor editor;
+	private SharedPreferences pref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,121 +48,144 @@ public class Schedule extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		user = (EditText) findViewById(R.id.user);
+		pass = (EditText) findViewById(R.id.pwd);
 		requset = (Button) findViewById(R.id.request);
+		class_table = (Button) findViewById(R.id.class_table);
 		text = (TextView) findViewById(R.id.text);
+		checkbox = (CheckBox) findViewById(R.id.remember_pass);
 		requset.setOnClickListener(this);
+		class_table.setOnClickListener(this);
+
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean isRemember = pref.getBoolean("remember", false);
+		if (isRemember) {
+			user.setText(pref.getString("user", ""));
+			pass.setText(pref.getString("pass", ""));
+			checkbox.setChecked(true);
+		}
+		
+		GregorianCalendar now = new GregorianCalendar();
+		now.setTime(new Date());
+		TimetableMaker ttm = new TimetableMaker();
+		ArrayList<Timetable> ts = ttm.getTimeTable(now);
+		ArrayList<Timetable> dts = ttm.getDayTimeTable(ts, TimetableMaker.getDayOfWeek(now));
+		
+		text.append(String.format("今天是第%s周 星期%s", ttm.getWeek(now), TimetableMaker.getDayOfWeek(now)));
+		text.append("\n全周课表\n");
+		for (Timetable tt : ts) {
+			text.append(tt.toString()+"\n");
+		}
+		text.append("今天课表\n");
+		for (Timetable tt : dts) {
+			text.append(tt.toString()+"\n");
+		}
+		text.append(ttm.getClassStatus(now).toString()+"\n");
+		Intent intent = new Intent("com.example.schedule.MyAppWidgetProvider.CHANGE_TEXT");
+		intent.putExtra("setText", "今天课表\n"+ttm.getClassStatus(now).toString()+"\n");
+		sendBroadcast(intent);
+
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if (v.getId() == R.id.request) {
+			editor = pref.edit();
+			if (checkbox.isChecked()) {
+				editor.putBoolean("remember", true);
+				editor.putString("user", user.getText().toString());
+				editor.putString("pass", pass.getText().toString());
+			} else {
+				editor.clear();
+			}
+			editor.commit();
 			sendRequestWithHttpURLConnection();
-			Log.e("wang", "start uel");
+		} else if (v.getId() == R.id.class_table) {
+			Intent intent = new Intent(this, ClassTable.class);
+			startActivity(intent);
 		}
 	}
 
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case SHOW_RESPONSE:
-				String response = (String) msg.obj;
-				text.setText(Rege.match(response));
-				
+			Response res = (Response) msg.obj;
+			if (res.getStatus()) {
+				try {
+					JSONObject jsonobj = new JSONObject(res.getResult());
+					boolean status = jsonobj.getBoolean("status");
+					if (status) {
+						MyDB dbHelper = new MyDB(Schedule.this, "lesson.db", null, 2);
+						SQLiteDatabase db = dbHelper.getWritableDatabase();
+						db.execSQL("delete from lesson");
+						JSONArray data = jsonobj.getJSONArray("data");
+						for (int i = 0; i < data.length(); i++) {
+							JSONArray l = data.getJSONArray(i);
+							String[] sql = { Integer.toString(i), l.getString(0), l.getString(1), l.getString(2),
+									l.getString(3), l.getString(4), l.getString(5), l.getString(6), l.getString(7),
+									l.getString(8) };
+							db.execSQL(
+									"insert into lesson (id,name,address,teacher,oddeven,startweek,endweek,day,startclass,endclass) values (?,?,?,?,?,?,?,?,?,?)",
+									sql);
+							text.append(l.toString() + "\n");
+						}
+						Toast.makeText(Schedule.this, "课表数据写入成功", Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(Schedule.this, "课表数据获取失败" + jsonobj.getString("msg"), Toast.LENGTH_SHORT).show();
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+					Toast.makeText(Schedule.this, "课表数据解析失败", Toast.LENGTH_SHORT).show();
+					text.setText("课表数据解析失败，" + res.getResult());
+				}
+
+			} else {
+				Toast.makeText(Schedule.this, "获取数据失败", Toast.LENGTH_SHORT).show();
+				text.setText("获取数据失败，" + res.getResult());
 			}
 		}
 	};
 
-    private void sendRequestWithHttpURLConnection() {
-        new Thread(new Runnable() {
-            public void run() {
-                HttpURLConnection conn = null;
-                String cookie = null;
-                String[] info = Schedule.this.getLoginInfo();
-                try {
-                    conn = (HttpURLConnection) new URL("http://202.202.1.176:8080/").openConnection();
-                    conn.setRequestMethod("GET");
-                    conn.setConnectTimeout(8000);
-                    conn.setReadTimeout(8000);
-                    conn.setRequestProperty("User-Agent",
-                            "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36");
-                    Map<String, List<String>> maps = conn.getHeaderFields();
-                    List<String> coolist = maps.get("Set-Cookie");
-                    Iterator<String> localIterator = coolist.iterator();
+	private void sendRequestWithHttpURLConnection() {
+		new Thread(new Runnable() {
+			public void run() {
+				String[] info = getLoginInfo();
+				HttpRequest req = new HttpRequest(
+						"http://121.42.12.235/class_table/getdata.php?name=" + info[0] + "&pass=" + info[1]);
+				Response res = req.query();
+				Message localMessage = new Message();
+				localMessage.obj = res;
+				handler.sendMessage(localMessage);
+			}
+		}).start();
 
-                    while (localIterator.hasNext()) {
-                        String tmp = localIterator.next();
-                        if (tmp.startsWith("ASP.NET_Session"))
-                            cookie = tmp.substring(0, 1 + tmp.indexOf(";"));
-                    }
-                    conn.disconnect();
-
-                    conn = (HttpURLConnection) new URL("http://202.202.1.176:8080/_data/index_login.aspx")
-                            .openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setConnectTimeout(8000);
-                    conn.setReadTimeout(8000);
-                    conn.setRequestProperty("User-Agent",
-                            "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36");
-                    conn.setRequestProperty("Cookie", cookie);
-                    conn.setRequestProperty("Referer", "http://202.202.1.176:8080/");
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
-                    StringBuffer localStringBuffer = new StringBuffer();
-                    localStringBuffer
-                            .append("__VIEWSTATEGENERATOR=CAA0A5A7&Sel_Type=STU&txt_ysdsdsdskgf=&pcInfo=&typeName=&aerererdsdxcxdfgfg=&efdfdfuuyyuuckjg=")
-                            .append(info[2]).append("&txt_dsdsdsdjkjkjc=").append(info[0]).append("&txt_dsdfdfgfouyy=")
-                            .append(info[1]);
-                    byte[] arrayOfByte1 = localStringBuffer.toString().getBytes();
-                    conn.getOutputStream().write(arrayOfByte1);
-                    conn.getInputStream();
-                    conn.disconnect();
-
-                    conn = (HttpURLConnection) new URL("http://202.202.1.176:8080/znpk/Pri_StuSel_rpt.aspx")
-                            .openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setConnectTimeout(8000);
-                    conn.setReadTimeout(8000);
-                    conn.setRequestProperty("User-Agent",
-                            "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36");
-                    conn.setRequestProperty("Cookie", cookie);
-                    conn.setRequestProperty("Referer", "http://202.202.1.176:8080/znpk/Pri_StuSel.aspx");
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
-                    byte[] arrayOfByte2 = "Sel_XNXQ=20151&rad=on&px=1&Submit01=%BC%EC%CB%F7".getBytes();
-                    conn.getOutputStream().write(arrayOfByte2);
-                    InputStream localInputStream = conn.getInputStream();
-                    InputStreamReader localInputStreamReader = new InputStreamReader(localInputStream, "gbk");
-                    BufferedReader reader = new BufferedReader(localInputStreamReader);
-
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-                    Message localMessage = new Message();
-                    localMessage.what = 0;
-                    localMessage.obj = response.toString();
-                    handler.sendMessage(localMessage);
-
-                } catch (Exception e) {
-                    Toast.makeText(Schedule.this, "获取课程表数据失败，请稍后再试", Toast.LENGTH_SHORT).show();
-                } finally {
-                    if (conn != null)
-                        conn.disconnect();
-                }
-            }
-        }).start();
-
-    }
+	}
 
 	protected String[] getLoginInfo() {
-		user = (EditText) findViewById(R.id.user);
-		pass = (EditText) findViewById(R.id.pwd);
 		String auser = user.getText().toString();
 		String apass = pass.getText().toString();
-		String encode = Encode.getMd5(auser, apass);
-		String[] res = { auser, apass, encode };
+		String[] res = { auser, apass };
 		return res;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.receiver:
+			startActivity(new Intent(this, MainReceiver.class));
+			break;
+		case R.id.send_computer_menu:
+			startActivity(new Intent(this, SetSaying.class));
+			break;
+		default:
+			break;
+		}
+		return true;
 	}
 }
