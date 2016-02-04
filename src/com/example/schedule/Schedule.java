@@ -1,13 +1,13 @@
 package com.example.schedule;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.test.ListViewTest;
 import com.example.test.MainReceiver;
 import com.example.tools.HttpRequest;
 import com.example.tools.MyDB;
@@ -77,14 +77,16 @@ public class Schedule extends Activity implements OnClickListener {
 			text.append(tt.toString()+"\n");
 		}
 		text.append("今天课表\n");
+		StringBuilder todayclass = new StringBuilder();
+		todayclass.append("今天课表\n");
 		for (Timetable tt : dts) {
 			text.append(tt.toString()+"\n");
+			todayclass.append(tt.toString()+"\n");
 		}
 		text.append(ttm.getClassStatus(now).toString()+"\n");
 		Intent intent = new Intent("com.example.schedule.MyAppWidgetProvider.CHANGE_TEXT");
-		intent.putExtra("setText", "今天课表\n"+ttm.getClassStatus(now).toString()+"\n");
+		intent.putExtra("setText", todayclass.toString());
 		sendBroadcast(intent);
-
 	}
 
 	@Override
@@ -183,6 +185,8 @@ public class Schedule extends Activity implements OnClickListener {
 		case R.id.send_computer_menu:
 			startActivity(new Intent(this, SetSaying.class));
 			break;
+		case R.id.listview:
+			startActivity(new Intent(this, ListViewTest.class));
 		default:
 			break;
 		}

@@ -34,6 +34,10 @@
             android:label="BroadcastReceiver test" >
         </activity>
         <activity
+            android:name="com.example.test.ListViewTest"
+            android:label="ListViewTest" >
+        </activity>
+        <activity
             android:name=".SetSaying"
             android:label="发送到电脑" >
             <intent-filter>
