@@ -38,6 +38,10 @@
             android:label="ListViewTest" >
         </activity>
         <activity
+            android:name="com.example.test.GridViewTest"
+            android:label="ListViewTest" >
+        </activity>
+        <activity
             android:name=".SetSaying"
             android:label="发送到电脑" >
             <intent-filter>
