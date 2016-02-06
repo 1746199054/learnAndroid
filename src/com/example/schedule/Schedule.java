@@ -22,7 +22,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +43,8 @@ public class Schedule extends Activity implements OnClickListener {
 
 	private SharedPreferences.Editor editor;
 	private SharedPreferences pref;
-
+	
+	private ArrayList<Timetable> weekTimeTable,dayTimetable;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -68,18 +71,18 @@ public class Schedule extends Activity implements OnClickListener {
 		GregorianCalendar now = new GregorianCalendar();
 		now.setTime(new Date());
 		TimetableMaker ttm = new TimetableMaker();
-		ArrayList<Timetable> ts = ttm.getTimeTable(now);
-		ArrayList<Timetable> dts = ttm.getDayTimeTable(ts, TimetableMaker.getDayOfWeek(now));
+		weekTimeTable = ttm.getTimeTable(now);
+		dayTimetable = ttm.getDayTimeTable(weekTimeTable, TimetableMaker.getDayOfWeek(now));
 		
 		text.append(String.format("今天是第%s周 星期%s", ttm.getWeek(now), TimetableMaker.getDayOfWeek(now)));
 		text.append("\n全周课表\n");
-		for (Timetable tt : ts) {
+		for (Timetable tt : weekTimeTable) {
 			text.append(tt.toString()+"\n");
 		}
 		text.append("今天课表\n");
 		StringBuilder todayclass = new StringBuilder();
 		todayclass.append("今天课表\n");
-		for (Timetable tt : dts) {
+		for (Timetable tt : dayTimetable) {
 			text.append(tt.toString()+"\n");
 			todayclass.append(tt.toString()+"\n");
 		}
@@ -104,7 +107,8 @@ public class Schedule extends Activity implements OnClickListener {
 			editor.commit();
 			sendRequestWithHttpURLConnection();
 		} else if (v.getId() == R.id.class_table) {
-			Intent intent = new Intent(this, ClassTable.class);
+			Intent intent = new Intent(this, com.shallcheek.timetale.MainActivity.class);
+			intent.putParcelableArrayListExtra("timetable", weekTimeTable);
 			startActivity(intent);
 		}
 	}

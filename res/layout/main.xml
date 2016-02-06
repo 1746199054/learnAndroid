@@ -33,9 +33,10 @@
     
     <Button
         android:id="@+id/class_table"
+        android:layout_marginTop="10sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="查看课表" />
+        android:text="全周课表" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
