@@ -11,44 +11,53 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int ic_coure_ba=0x7f050010;
-        public static final int ic_coure_ba_pr=0x7f050011;
-        public static final int ic_coure_er=0x7f050004;
-        public static final int ic_coure_er_pr=0x7f050005;
-        public static final int ic_coure_jiu=0x7f050012;
-        public static final int ic_coure_jiu_pr=0x7f050013;
-        public static final int ic_coure_liu=0x7f05000c;
-        public static final int ic_coure_liu_pr=0x7f05000d;
-        public static final int ic_coure_qi=0x7f05000e;
-        public static final int ic_coure_qi_pr=0x7f05000f;
-        public static final int ic_coure_san=0x7f050006;
-        public static final int ic_coure_san_pr=0x7f050007;
-        public static final int ic_coure_si=0x7f050008;
-        public static final int ic_coure_si_pr=0x7f050009;
-        public static final int ic_coure_wu=0x7f05000a;
-        public static final int ic_coure_wu_pr=0x7f05000b;
-        public static final int ic_coure_wuw=0x7f050020;
-        public static final int ic_coure_wuw_pr=0x7f050021;
+        public static final int color_dialog_content=0x7f060001;
+        public static final int color_dialog_content_prompt=0x7f060003;
+        public static final int color_dialog_gray=0x7f060000;
+        public static final int color_dialog_title=0x7f060002;
+        public static final int color_type_help=0x7f060005;
+        public static final int color_type_info=0x7f060004;
+        public static final int color_type_success=0x7f060008;
+        public static final int color_type_warning=0x7f060007;
+        public static final int color_type_wrong=0x7f060006;
+        public static final int ic_coure_ba=0x7f060019;
+        public static final int ic_coure_ba_pr=0x7f06001a;
+        public static final int ic_coure_er=0x7f06000d;
+        public static final int ic_coure_er_pr=0x7f06000e;
+        public static final int ic_coure_jiu=0x7f06001b;
+        public static final int ic_coure_jiu_pr=0x7f06001c;
+        public static final int ic_coure_liu=0x7f060015;
+        public static final int ic_coure_liu_pr=0x7f060016;
+        public static final int ic_coure_qi=0x7f060017;
+        public static final int ic_coure_qi_pr=0x7f060018;
+        public static final int ic_coure_san=0x7f06000f;
+        public static final int ic_coure_san_pr=0x7f060010;
+        public static final int ic_coure_si=0x7f060011;
+        public static final int ic_coure_si_pr=0x7f060012;
+        public static final int ic_coure_wu=0x7f060013;
+        public static final int ic_coure_wu_pr=0x7f060014;
+        public static final int ic_coure_wuw=0x7f060029;
+        public static final int ic_coure_wuw_pr=0x7f06002a;
         /**  For suggestions 
          */
-        public static final int ic_coure_yi=0x7f050002;
-        public static final int ic_coure_yi_pr=0x7f050003;
-        public static final int ic_coure_yier=0x7f050016;
-        public static final int ic_coure_yier_pr=0x7f050017;
-        public static final int ic_coure_yiliu=0x7f05001e;
-        public static final int ic_coure_yiliu_pr=0x7f05001f;
-        public static final int ic_coure_yis=0x7f05001a;
-        public static final int ic_coure_yis_pr=0x7f05001b;
-        public static final int ic_coure_yisan=0x7f050018;
-        public static final int ic_coure_yisan_pr=0x7f050019;
-        public static final int ic_coure_yisi=0x7f050014;
-        public static final int ic_coure_yisi_pr=0x7f050015;
-        public static final int ic_coure_yiwu=0x7f05001c;
-        public static final int ic_coure_yiwu_pr=0x7f05001d;
-        public static final int tab_indicator_text_selected=0x7f050022;
-        public static final int tab_indicator_text_unselected=0x7f050023;
-        public static final int text_color=0x7f050001;
-        public static final int view_line=0x7f050000;
+        public static final int ic_coure_yi=0x7f06000b;
+        public static final int ic_coure_yi_pr=0x7f06000c;
+        public static final int ic_coure_yier=0x7f06001f;
+        public static final int ic_coure_yier_pr=0x7f060020;
+        public static final int ic_coure_yiliu=0x7f060027;
+        public static final int ic_coure_yiliu_pr=0x7f060028;
+        public static final int ic_coure_yis=0x7f060023;
+        public static final int ic_coure_yis_pr=0x7f060024;
+        public static final int ic_coure_yisan=0x7f060021;
+        public static final int ic_coure_yisan_pr=0x7f060022;
+        public static final int ic_coure_yisi=0x7f06001d;
+        public static final int ic_coure_yisi_pr=0x7f06001e;
+        public static final int ic_coure_yiwu=0x7f060025;
+        public static final int ic_coure_yiwu_pr=0x7f060026;
+        public static final int tab_indicator_text_selected=0x7f06002b;
+        public static final int tab_indicator_text_unselected=0x7f06002c;
+        public static final int text_color=0x7f06000a;
+        public static final int view_line=0x7f060009;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -58,70 +67,120 @@ public final class R {
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f060000;
-        public static final int activity_vertical_margin=0x7f060001;
+        public static final int activity_horizontal_margin=0x7f090000;
+        public static final int activity_vertical_margin=0x7f090001;
     }
     public static final class drawable {
         public static final int address=0x7f020000;
         public static final int ic_launcher=0x7f020001;
-        public static final int select_label_ba=0x7f020002;
-        public static final int select_label_er=0x7f020003;
-        public static final int select_label_jiu=0x7f020004;
-        public static final int select_label_liu=0x7f020005;
-        public static final int select_label_qi=0x7f020006;
-        public static final int select_label_san=0x7f020007;
-        public static final int select_label_se=0x7f020008;
-        public static final int select_label_si=0x7f020009;
-        public static final int select_label_sss=0x7f02000a;
-        public static final int select_label_sy=0x7f02000b;
-        public static final int select_label_wu=0x7f02000c;
-        public static final int select_label_wuw=0x7f02000d;
-        public static final int select_label_yi=0x7f02000e;
-        public static final int select_label_yiw=0x7f02000f;
-        public static final int select_label_yiwu=0x7f020010;
-        public static final int tab_indicator_text=0x7f020011;
-        public static final int text=0x7f020012;
-        public static final int textfield_default=0x7f020013;
+        public static final int sample_img=0x7f020002;
+        public static final int sel_btn=0x7f020003;
+        public static final int sel_btn_help=0x7f020004;
+        public static final int sel_btn_info=0x7f020005;
+        public static final int sel_btn_success=0x7f020006;
+        public static final int sel_btn_warning=0x7f020007;
+        public static final int sel_btn_wrong=0x7f020008;
+        public static final int sel_def_gray=0x7f020009;
+        public static final int sel_def_gray_left=0x7f02000a;
+        public static final int sel_def_gray_right=0x7f02000b;
+        public static final int select_label_ba=0x7f02000c;
+        public static final int select_label_er=0x7f02000d;
+        public static final int select_label_jiu=0x7f02000e;
+        public static final int select_label_liu=0x7f02000f;
+        public static final int select_label_qi=0x7f020010;
+        public static final int select_label_san=0x7f020011;
+        public static final int select_label_se=0x7f020012;
+        public static final int select_label_si=0x7f020013;
+        public static final int select_label_sss=0x7f020014;
+        public static final int select_label_sy=0x7f020015;
+        public static final int select_label_wu=0x7f020016;
+        public static final int select_label_wuw=0x7f020017;
+        public static final int select_label_yi=0x7f020018;
+        public static final int select_label_yiw=0x7f020019;
+        public static final int select_label_yiwu=0x7f02001a;
+        public static final int shape_corners_bottom=0x7f02001b;
+        public static final int shape_corners_bottom_normal=0x7f02001c;
+        public static final int shape_left_bottom=0x7f02001d;
+        public static final int shape_left_bottom_normal=0x7f02001e;
+        public static final int shape_right_bottom=0x7f02001f;
+        public static final int shape_right_bottom_normal=0x7f020020;
+        public static final int shape_top=0x7f020021;
+        public static final int tab_indicator_text=0x7f020022;
+        public static final int text=0x7f020023;
+        public static final int textfield_default=0x7f020024;
     }
     public static final class id {
-        public static final int appbutton=0x7f0a0001;
-        public static final int appwidget=0x7f0a0000;
-        public static final int class_table=0x7f0a000e;
-        public static final int gridview=0x7f0a0004;
-        public static final int layout_=0x7f0a0012;
-        public static final int listview=0x7f0a0005;
-        public static final int listview2=0x7f0a0006;
-        public static final int main_scrollview=0x7f0a0002;
-        public static final int main_timetable_ly=0x7f0a0003;
-        public static final int pwd=0x7f0a000b;
-        public static final int receiver=0x7f0a0017;
-        public static final int remember_pass=0x7f0a000c;
-        public static final int request=0x7f0a000d;
-        public static final int send_computer_menu=0x7f0a0018;
-        public static final int send_result=0x7f0a0016;
-        public static final int set_appwidget=0x7f0a0010;
-        public static final int set_appwidget_bu=0x7f0a0011;
-        public static final int setsay_bu=0x7f0a0014;
-        public static final int setsay_cancel=0x7f0a0013;
-        public static final int setsaying=0x7f0a0015;
-        public static final int text=0x7f0a000f;
-        public static final int textView1=0x7f0a0007;
-        public static final int textView2=0x7f0a0008;
-        public static final int textView3=0x7f0a0009;
-        public static final int user=0x7f0a000a;
+        public static final int Pic=0x7f0b0005;
+        public static final int Prompt=0x7f0b0004;
+        public static final int Text=0x7f0b0006;
+        public static final int TextAndPic=0x7f0b0007;
+        public static final int appbutton=0x7f0b0001;
+        public static final int appwidget=0x7f0b0000;
+        public static final int btnNegative=0x7f0b0012;
+        public static final int btnPositive=0x7f0b0010;
+        public static final int class_table=0x7f0b001f;
+        public static final int colordialogitem=0x7f0b002a;
+        public static final int divider=0x7f0b0011;
+        public static final int gridview=0x7f0b0008;
+        public static final int ivContent=0x7f0b000d;
+        public static final int layout_=0x7f0b0023;
+        public static final int listview=0x7f0b0016;
+        public static final int listview2=0x7f0b0017;
+        public static final int llBkg=0x7f0b000a;
+        public static final int llBtnGroup=0x7f0b000f;
+        public static final int llContent=0x7f0b000c;
+        public static final int llTop=0x7f0b0013;
+        public static final int loading=0x7f0b0009;
+        public static final int logoIv=0x7f0b0014;
+        public static final int main_scrollview=0x7f0b0002;
+        public static final int main_timetable_ly=0x7f0b0003;
+        public static final int pwd=0x7f0b001c;
+        public static final int receiver=0x7f0b0028;
+        public static final int remember_pass=0x7f0b001d;
+        public static final int request=0x7f0b001e;
+        public static final int send_computer_menu=0x7f0b0029;
+        public static final int send_result=0x7f0b0027;
+        public static final int servicetest=0x7f0b002b;
+        public static final int set_appwidget=0x7f0b0021;
+        public static final int set_appwidget_bu=0x7f0b0022;
+        public static final int setresume=0x7f0b002f;
+        public static final int setsay_bu=0x7f0b0025;
+        public static final int setsay_cancel=0x7f0b0024;
+        public static final int setsaying=0x7f0b0026;
+        public static final int setsilent=0x7f0b002e;
+        public static final int setsilentservice=0x7f0b002c;
+        public static final int startupdateappwidget=0x7f0b002d;
+        public static final int text=0x7f0b0020;
+        public static final int textView1=0x7f0b0018;
+        public static final int textView2=0x7f0b0019;
+        public static final int textView3=0x7f0b001a;
+        public static final int topLayout=0x7f0b0015;
+        public static final int tvContent=0x7f0b000e;
+        public static final int tvTitle=0x7f0b000b;
+        public static final int user=0x7f0b001b;
     }
     public static final class layout {
-        public static final int appwidget=0x7f030000;
-        public static final int class_table=0x7f030001;
-        public static final int gridview=0x7f030002;
-        public static final int listview=0x7f030003;
-        public static final int listviewadapter=0x7f030004;
-        public static final int main=0x7f030005;
-        public static final int main_receiver=0x7f030006;
-        public static final int setsaying=0x7f030007;
+        public static final int appwidget=0x7f040000;
+        public static final int class_table=0x7f040001;
+        public static final int colordialog=0x7f040002;
+        public static final int gridview=0x7f040003;
+        public static final int layout_colordialog=0x7f040004;
+        public static final int layout_promptdialog=0x7f040005;
+        public static final int listview=0x7f040006;
+        public static final int listviewadapter=0x7f040007;
+        public static final int main=0x7f040008;
+        public static final int main_receiver=0x7f040009;
+        public static final int setsaying=0x7f04000a;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
+        public static final int main=0x7f0a0000;
+    }
+    public static final class mipmap {
+        public static final int ic_help=0x7f030000;
+        public static final int ic_info=0x7f030001;
+        public static final int ic_success=0x7f030002;
+        public static final int ic_wrong=0x7f030003;
+        public static final int icon_warning=0x7f030004;
     }
     public static final class string {
         public static final int action_settings=0x7f070002;
@@ -156,15 +215,16 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f080001;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
-        public static final int MyWidget=0x7f080002;
-        public static final int MyWidget_TabText=0x7f080003;
+        public static final int AppTheme=0x7f080002;
+        public static final int MyWidget=0x7f080003;
+        public static final int MyWidget_TabText=0x7f080004;
+        public static final int color_dialog=0x7f080000;
     }
     public static final class xml {
-        public static final int appwidget_info=0x7f040000;
+        public static final int appwidget_info=0x7f050000;
     }
 }

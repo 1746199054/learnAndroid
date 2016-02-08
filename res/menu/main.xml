@@ -8,8 +8,26 @@
     <item
         android:id="@+id/send_computer_menu"
         android:title="发送到电脑"/>
-      <item
+    <item
         android:id="@+id/listview"
-        android:title="listview"/>
+        android:title="Listview"/>
+    <item
+        android:id="@+id/colordialogitem"
+        android:title="Colordialog"/>
+    <item
+        android:id="@+id/servicetest"
+        android:title="Service"/>
+    <item
+        android:id="@+id/setsilentservice"
+        android:title="Setsilent Test"/>
+     <item
+        android:id="@+id/startupdateappwidget"
+        android:title="Start updateAppwidget"/>
+    <item
+        android:id="@+id/setsilent"
+        android:title="设置静音"/>
+    <item
+        android:id="@+id/setresume"
+        android:title="声音恢复"/>
 
 </menu>

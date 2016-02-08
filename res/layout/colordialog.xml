@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/Prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Prompt Dialog"/>
+
+    <Button
+        android:id="@+id/Pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pic"/>
+
+    <Button
+        android:id="@+id/Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Text"/>
+
+    <Button
+        android:id="@+id/TextAndPic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Text And Pic"/>
+
+</LinearLayout>

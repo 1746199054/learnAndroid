@@ -7,8 +7,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.schedule.R.id;
+import com.example.service.SetSilent;
+import com.example.service.UpdateAppWidget;
+import com.example.test.ColorDialogTest;
 import com.example.test.ListViewTest;
 import com.example.test.MainReceiver;
+import com.example.test.ServiceTest;
+import com.example.tools.AlarmManagerUtil;
+import com.example.tools.AudioManagerUtil;
 import com.example.tools.HttpRequest;
 import com.example.tools.MyDB;
 import com.example.tools.Response;
@@ -16,6 +23,9 @@ import com.example.tools.timetable.Timetable;
 import com.example.tools.timetable.TimetableMaker;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -43,13 +53,17 @@ public class Schedule extends Activity implements OnClickListener {
 
 	private SharedPreferences.Editor editor;
 	private SharedPreferences pref;
-	
-	private ArrayList<Timetable> weekTimeTable,dayTimetable;
+
+	private ArrayList<Timetable> weekTimeTable, dayTimetable;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		// AlarmManagerUtil.sendUpdateBroadcast(this);
+		// Intent aintent = new Intent(this, SetSaying.class);
 
 		user = (EditText) findViewById(R.id.user);
 		pass = (EditText) findViewById(R.id.pwd);
@@ -67,26 +81,27 @@ public class Schedule extends Activity implements OnClickListener {
 			pass.setText(pref.getString("pass", ""));
 			checkbox.setChecked(true);
 		}
-		
+		Toast.makeText(this, "update调用次数" + pref.getInt("update", 0), Toast.LENGTH_SHORT).show();
+
 		GregorianCalendar now = new GregorianCalendar();
 		now.setTime(new Date());
 		TimetableMaker ttm = new TimetableMaker();
 		weekTimeTable = ttm.getTimeTable(now);
 		dayTimetable = ttm.getDayTimeTable(weekTimeTable, TimetableMaker.getDayOfWeek(now));
-		
+
 		text.append(String.format("今天是第%s周 星期%s", ttm.getWeek(now), TimetableMaker.getDayOfWeek(now)));
 		text.append("\n全周课表\n");
 		for (Timetable tt : weekTimeTable) {
-			text.append(tt.toString()+"\n");
+			text.append(tt.toString() + "\n");
 		}
 		text.append("今天课表\n");
 		StringBuilder todayclass = new StringBuilder();
 		todayclass.append("今天课表\n");
 		for (Timetable tt : dayTimetable) {
-			text.append(tt.toString()+"\n");
-			todayclass.append(tt.toString()+"\n");
+			text.append(tt.toString() + "\n");
+			todayclass.append(tt.toString() + "\n");
 		}
-		text.append(ttm.getClassStatus(now).toString()+"\n");
+		text.append(ttm.getClassStatus(now).toString() + "\n");
 		Intent intent = new Intent("com.example.schedule.MyAppWidgetProvider.CHANGE_TEXT");
 		intent.putExtra("setText", todayclass.toString());
 		sendBroadcast(intent);
@@ -191,6 +206,32 @@ public class Schedule extends Activity implements OnClickListener {
 			break;
 		case R.id.listview:
 			startActivity(new Intent(this, ListViewTest.class));
+			break;
+		case R.id.colordialogitem:
+			startActivity(new Intent(this, ColorDialogTest.class));
+			break;
+		case R.id.servicetest:
+			startActivity(new Intent(this, ServiceTest.class));
+			break;
+		case R.id.startupdateappwidget:
+			startService(new Intent(this, UpdateAppWidget.class));
+			break;
+		case R.id.setsilentservice:
+			Intent bintent = new Intent(this, SetSilent.class);
+			AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+			bintent.putExtra("Tag", true);
+			PendingIntent pendingIntent = PendingIntent.getService(this, 59679, bintent,
+					PendingIntent.FLAG_UPDATE_CURRENT);
+			am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
+			break;
+		case R.id.setsilent:
+			AudioManagerUtil.setSilent(this);
+			AudioManagerUtil.setMode(true, this);
+			Log.e("wang", AudioManagerUtil.getMode(this)+"");
+			break;
+		case R.id.setresume:
+			AudioManagerUtil.setResume(this);
+			break;
 		default:
 			break;
 		}
