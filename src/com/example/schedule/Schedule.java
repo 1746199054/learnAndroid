@@ -35,6 +35,7 @@ import android.os.Message;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -237,4 +238,21 @@ public class Schedule extends Activity implements OnClickListener {
 		}
 		return true;
 	}
+	
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){   
+            if((System.currentTimeMillis()-exitTime) > 2000){  
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();                                
+                exitTime = System.currentTimeMillis();   
+            } else {
+                finish();
+                android.os.Process.killProcess(android.os.Process.myPid()); //获取PID 
+                System.exit(0);
+            }
+            return true;   
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

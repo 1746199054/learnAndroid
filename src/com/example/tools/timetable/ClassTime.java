@@ -53,7 +53,7 @@ public class ClassTime {
 
 	public static ClassTime getInstance(GregorianCalendar n, int[][] classStatus) {
 		int minuteOfDay = n.get(Calendar.HOUR_OF_DAY) * 60 + n.get(Calendar.MINUTE);
-		ClassTime classtime = null;
+		ClassTime classtime = null; 
 		if (minuteOfDay >= classStatus[0][0] && minuteOfDay <= classStatus[3][1]) {
 			classtime = getClassStatusTool(0, minuteOfDay, classStatus);
 		} else if (minuteOfDay >= classStatus[4][0] && minuteOfDay <= classStatus[7][1]) {
